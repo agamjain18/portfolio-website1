@@ -21,6 +21,13 @@ import { ThemeProvider } from "@/components/theme-provider"
 import type { Project } from "@/data/projects"
 import { projectsData } from "@/data/projects"
 
+export function generateStaticParams() {
+  // Return an array of all possible project IDs as strings
+  return projectsData.map((project) => ({
+    id: project.id.toString(),
+  }))
+}
+
 const ProjectDetailPage = ({ params }: { params: { id: string } }) => {
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
