@@ -15,85 +15,26 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { ThemeProvider } from "@/components/theme-provider"
 import type { Project } from "@/data/projects"
-import { projectsData } from "@/data/projects"
+import { useState } from "react"
 
-export function generateStaticParams() {
-  // Return an array of all possible project IDs as strings
-  return projectsData.map((project) => ({
-    id: project.id.toString(),
-  }))
+interface ProjectDetailClientProps {
+  project: Project
 }
 
-const ProjectDetailPage = ({ params }: { params: { id: string } }) => {
-  const [project, setProject] = useState<Project | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // Try to get project from sessionStorage first
-    const storedProject = sessionStorage.getItem("selectedProject")
-    if (storedProject) {
-      setProject(JSON.parse(storedProject))
-      setLoading(false)
-      return
-    }
-
-    // Fallback: find project by ID
-    const projectId = Number.parseInt(params.id)
-    const foundProject = projectsData.find((p) => p.id === projectId)
-    if (foundProject) {
-      setProject(foundProject)
-    }
-    setLoading(false)
-  }, [params.id])
+const ProjectDetailClient = ({ project }: ProjectDetailClientProps) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   const goBack = () => {
     window.history.back()
   }
 
-  if (loading) {
-    return (
-      <ThemeProvider>
-        <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      </ThemeProvider>
-    )
-  }
-
-  if (!project) {
-    return (
-      <ThemeProvider>
-        <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Project Not Found</h1>
-            <Button onClick={goBack} variant="outline">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Go Back
-            </Button>
-          </div>
-        </div>
-      </ThemeProvider>
-    )
-  }
-
-  return (
-    <ThemeProvider>
-      <ProjectDetailContent project={project} onBack={goBack} />
-    </ThemeProvider>
-  )
-}
-
-const ProjectDetailContent = ({ project, onBack }: { project: Project; onBack: () => void }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % project.images.length)
+    setCurrentImageIndex((prev: number) => (prev + 1) % project.images.length)
   }
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length)
+    setCurrentImageIndex((prev: number) => (prev - 1 + project.images.length) % project.images.length)
   }
 
   return (
@@ -102,7 +43,7 @@ const ProjectDetailContent = ({ project, onBack }: { project: Project; onBack: (
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80 border-b border-gray-200/20 dark:border-gray-800/20">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
+            <Button variant="ghost" onClick={goBack} className="flex items-center gap-2">
               <ArrowLeft className="h-5 w-5" />
               Back to Portfolio
             </Button>
@@ -436,7 +377,7 @@ const ProjectDetailContent = ({ project, onBack }: { project: Project; onBack: (
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-gray-200/20 dark:border-gray-800/20 bg-gray-50/50 dark:bg-gray-900/50">
         <div className="container mx-auto text-center">
-          <Button onClick={onBack} variant="outline" size="lg" className="bg-transparent">
+          <Button onClick={goBack} variant="outline" size="lg" className="bg-transparent">
             <ArrowLeft className="mr-2 h-5 w-5" />
             Back to Portfolio
           </Button>
@@ -446,4 +387,4 @@ const ProjectDetailContent = ({ project, onBack }: { project: Project; onBack: (
   )
 }
 
-export default ProjectDetailPage
+export default ProjectDetailClient
