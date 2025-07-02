@@ -17,6 +17,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
+export function generateStaticParams() {
+  // List all possible experience IDs as strings
+  return [
+    { id: "1" },
+    { id: "2" },
+    { id: "3" },
+    { id: "4" },
+  ]
+}
+
 const ExperienceDetailPage = () => {
   const params = useParams()
   const router = useRouter()
