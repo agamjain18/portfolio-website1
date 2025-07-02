@@ -1,5 +1,4 @@
-
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import {
   ArrowLeft,
   Calendar,
@@ -16,6 +15,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export function generateStaticParams() {
   // List all possible experience IDs as strings
@@ -27,10 +27,9 @@ export function generateStaticParams() {
   ]
 }
 
-const ExperienceDetailPage = () => {
-  const params = useParams()
-  const router = useRouter()
-  const experienceId = Number.parseInt(params.id as string)
+// Accept params as argument
+const ExperienceDetailPage = ({ params }: { params: { id: string } }) => {
+  const experienceId = Number.parseInt(params.id)
 
   // Extended experience data with full details
   const experienceDetails = {
@@ -365,7 +364,9 @@ const ExperienceDetailPage = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Experience Not Found</h1>
-          <Button onClick={() => router.push("/")}>Back to Home</Button>
+          <Link href="/">
+            <Button>Back to Home</Button>
+          </Link>
         </div>
       </div>
     )
@@ -402,7 +403,7 @@ const ExperienceDetailPage = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white">
         <div className="container mx-auto px-6 py-8">
-          <Button variant="ghost" onClick={() => router.push("/")} className="text-white hover:bg-white/20 mb-6">
+          <Button variant="ghost" onClick={() => window.history.back()} className="text-white hover:bg-white/20 mb-6">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Portfolio
           </Button>
