@@ -224,13 +224,12 @@ const Hero = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="mb-8"
+            className="mb-10"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
-              Aagam Jain
+            <h1 className="text-5xl md:text-7xl font-bold mb-10 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
+              Agam Jain
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 font-light">
-              Full Stack Developer & UI/UX Designer
             </p>
           </motion.div>
 
