@@ -1,4 +1,4 @@
-"use client"
+
 import { motion } from "framer-motion"
 import {
   ArrowLeft,
@@ -18,6 +18,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import type { Project } from "@/data/projects"
 import { useState } from "react"
 import { getProjectById } from "@/data/projects" // Adjust import as needed
+import projects from "@/components/projects"
 
 interface ProjectDetailClientProps {
   project: Project
@@ -410,5 +411,5 @@ export async function generateStaticParams() {
 
 export function getProjectById(id: string) {
   // Replace 'projects' with your actual array of projects
-  return projects.find((project) => project.id === id)
+  return projects.find((project: { id: string }) => project.id === id)
 }
