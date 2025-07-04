@@ -387,4 +387,18 @@ const ProjectDetailClient = ({ project }: ProjectDetailClientProps) => {
   )
 }
 
+export function generateStaticParams() {
+  // Replace with your actual project IDs or fetch from your data source
+  return [
+    { id: "1" },
+    { id: "2" },
+    { id: "3" },
+    { id: "4" },
+    { id: "5" },
+    { id: "6" },
+    { id: "7" },
+    { id: "8" },
+  ]
+}
+
 export default ProjectDetailClient
