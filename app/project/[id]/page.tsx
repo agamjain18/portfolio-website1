@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Project } from "@/data/projects"
 import { useState } from "react"
+import { getProjectById } from "@/data/projects" // Adjust import as needed
 
 interface ProjectDetailClientProps {
   project: Project
@@ -387,7 +388,13 @@ const ProjectDetailClient = ({ project }: ProjectDetailClientProps) => {
   )
 }
 
-export function generateStaticParams() {
+export default async function Page({ params }: { params: { id: string } }) {
+  const project = await getProjectById(params.id) // Fetch your project data here
+  if (!project) return <div>Project not found</div>
+  return <ProjectDetailClient project={project} />
+}
+
+export async function generateStaticParams() {
   // Replace with your actual project IDs or fetch from your data source
   return [
     { id: "1" },
@@ -401,4 +408,7 @@ export function generateStaticParams() {
   ]
 }
 
-export default ProjectDetailClient
+export function getProjectById(id: string) {
+  // Replace 'projects' with your actual array of projects
+  return projects.find((project) => project.id === id)
+}
